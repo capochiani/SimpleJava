@@ -1,0 +1,46 @@
+<!-- http://logging.apache.org/log4j/2.x/manual/migration.html -->
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration debug="true"
+	xmlns:log4j='http://jakarta.apache.org/log4j/'>
+
+<!-- APPENDERS -->
+	<appender name="A1" class="org.apache.log4j.ConsoleAppender">
+		<param name="Target" value="System.out" /> <!-- o un file di log? -->
+		<layout class="org.apache.log4j.PatternLayout">
+			<!-- https://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/PatternLayout.html -->
+			<param name="ConversionPattern" value="%-5p %c{1} - %m%n" />
+			<!-- Output: DEBUG [main]: Message 1 -->
+		</layout>
+
+	</appender>
+	<appender name="console"
+		class="kafka.producer.KafkaLog4jAppender">
+		<param name="Topic" value="kafkatopic" />
+		<param name="BrokerList" value="localhost:9092" />
+		<param name="syncSend" value="true" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L %% - %m%n" />
+		</layout>
+	</appender>
+<!-- FINE APPENDERS -->
+
+	<logger name="org.apache.kafka">
+		<level value="error" />
+		<appender-ref ref="console" />
+	</logger>
+	
+	<logger name="com.example.kafkaLogger">
+		<level value="debug" />
+		<appender-ref ref="kafkaAppender" />
+	</logger>
+	
+		<root>
+		<level value="DEBUG" />
+		<appender-ref ref="console" />
+	</root>
+
+</log4j:configuration>

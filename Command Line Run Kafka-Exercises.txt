@@ -1,0 +1,25 @@
+==================
+NOTE DI FRANCESCA 
+==================
+
+Path, Path, Path...
+cd kafka
+cd kafka_2.12-2.3.0
+
+
+Start Server:
+.\bin\windows\zookeeper-server-start.bat .\config\zookeeper.properties
+
+.\bin\windows\zookeeper-server-start.bat \config\server.properties
+
+Create Topic:
+.\bin\windows\kafka-topics.bat --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic supernico
+
+.\bin\windows\kafka-topics.bat --list --bootstrap-server localhost:9092
+ 
+ Send Message:
+.\bin\windows\kafka-console-producer.bat --broker-list localhost:9092 --topic supernico
+ 
+ Start Consumer:
+.\bin\windows\kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic supernico --from-beginning
+ 
